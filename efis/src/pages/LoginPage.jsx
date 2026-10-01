@@ -3,17 +3,43 @@ import { ArrowRight, Eye, EyeOff, LockKeyhole, Mail } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import Brand from '../components/Brand.jsx'
 
-function normalizeProfile(data) {
-  const company = data.company || {}
+function splitName(name) {
+  const parts = String(name || '').trim().split(/\s+/).filter(Boolean)
+  if (!parts.length) return { firstName: '', lastName: '', otherNames: '' }
 
   return {
-    name: data.name || data.username || 'User',
+    firstName: parts[0],
+    lastName: parts.length > 1 ? parts[parts.length - 1] : '',
+    otherNames: parts.slice(1, -1).join(' '),
+  }
+}
+
+function normalizeProfile(data) {
+  const company = data.company || {}
+  const fromName = splitName(data.name)
+  const roles = Array.isArray(data.roles)
+    ? data.roles.map((role) => typeof role === 'string' ? role : role.roleName || role.name).filter(Boolean)
+    : []
+  const firstName = data.firstName || fromName.firstName
+  const lastName = data.lastName || fromName.lastName
+  const otherNames = data.otherNames ?? fromName.otherNames
+
+  return {
+    token: data.token || data.accessToken || '',
+    usersId: data.users_id ?? data.userId ?? data.id ?? '',
+    firstName,
+    lastName,
+    otherNames,
+    phoneNo: data.phoneNo || data.phone || '',
+    nationalIDNo: data.nationalIDNo || data.nationalIdNo || '',
+    staffID: data.staffID || data.staffId || '',
+    departmentId: data.department_id ?? data.departmentId ?? '',
+    active: data.active !== false,
+    name: data.name || [firstName, otherNames, lastName].filter(Boolean).join(' ') || data.username || 'User',
     username: data.username || '',
     email: data.email || '',
     missionId: data.mission_id ?? '',
-    roles: Array.isArray(data.roles)
-      ? data.roles.map((role) => typeof role === 'string' ? role : role.roleName || role.name).filter(Boolean)
-      : [],
+    roles,
     company: {
       name: company.name || '',
       email: company.email || '',

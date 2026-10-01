@@ -13,7 +13,7 @@ function App() {
       <Route
         path="/profile"
         element={profile
-          ? <ProfilePage profile={profile} onSignOut={() => setProfile(null)} />
+          ? <ProfilePage profile={profile} onSignOut={() => setProfile(null)} onProfileUpdated={setProfile} />
           : <Navigate to="/" replace />}
       />
       <Route path="*" element={<Navigate to="/" replace />} />

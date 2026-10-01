@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Building2, PencilLine, ShieldCheck, UserRound } from 'lucide-react'
+import EditProfileModal from '../components/EditProfileModal.jsx'
 import ProfileField from '../components/ProfileField.jsx'
 import ProfileSidebar from '../components/ProfileSidebar.jsx'
 
@@ -15,8 +16,9 @@ function formatDate(value) {
   }).format(date)
 }
 
-function ProfilePage({ profile, onSignOut }) {
+function ProfilePage({ profile, onSignOut, onProfileUpdated }) {
   const [notice, setNotice] = useState('')
+  const [editing, setEditing] = useState(false)
   const initials = profile.name
     .split(/\s+/)
     .filter(Boolean)
@@ -48,7 +50,10 @@ function ProfilePage({ profile, onSignOut }) {
             <button
               type="button"
               className="edit-profile-button"
-              onClick={() => setNotice('Profile editing will be available when the update endpoint is connected.')}
+              onClick={() => {
+                setNotice('')
+                setEditing(true)
+              }}
             >
               <PencilLine size={16} /> <span>Edit profile</span>
             </button>
@@ -62,7 +67,9 @@ function ProfilePage({ profile, onSignOut }) {
               <h2>{profile.name}</h2>
               <p>@{profile.username}</p>
             </div>
-            <span className="account-status"><span /> Account active</span>
+            <span className={`account-status${profile.active === false ? ' inactive' : ''}`}>
+              <span /> {profile.active === false ? 'Account inactive' : 'Account active'}
+            </span>
           </section>
 
           <div className="profile-sections">
@@ -107,6 +114,16 @@ function ProfilePage({ profile, onSignOut }) {
           </div>
         </div>
       </section>
+
+      <EditProfileModal
+        profile={profile}
+        open={editing}
+        onClose={() => setEditing(false)}
+        onUpdated={(nextProfile) => {
+          onProfileUpdated(nextProfile)
+          setNotice('Profile details were saved.')
+        }}
+      />
     </main>
   )
 }

@@ -800,6 +800,15 @@ button.workspace-nav-item {
   background: #4e9b61;
 }
 
+.account-status.inactive {
+  color: var(--orange-600);
+  background: #fff4e9;
+}
+
+.account-status.inactive span {
+  background: var(--orange-500);
+}
+
 .profile-sections {
   display: grid;
   gap: 14px;
@@ -1025,5 +1034,223 @@ button.workspace-nav-item {
 
   .profile-field {
     min-height: 52px;
+  }
+}
+
+.modal-overlay {
+  position: fixed;
+  z-index: 40;
+  inset: 0;
+  display: grid;
+  padding: 24px 16px;
+  overflow: auto;
+  background: rgba(16, 38, 27, 0.52);
+  place-items: center;
+}
+
+.modal-dialog {
+  width: min(100%, 720px);
+  margin: auto;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--white);
+  box-shadow: 0 24px 60px rgba(24, 60, 43, 0.22);
+  animation: arrive 220ms ease-out both;
+}
+
+.modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px 24px 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.modal-header h2 {
+  margin: 0;
+  color: var(--green-950);
+  font-family: 'Manrope', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.modal-header p:last-child {
+  margin: 6px 0 0;
+  color: var(--ink-muted);
+  font-size: 12px;
+}
+
+.modal-close {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  padding: 0;
+  border: 1px solid #cbdac8;
+  border-radius: 4px;
+  color: var(--green-800);
+  background: var(--white);
+  cursor: pointer;
+}
+
+.modal-close:hover {
+  border-color: var(--orange-500);
+  background: #fff9f2;
+}
+
+.edit-profile-form {
+  padding: 18px 24px 22px;
+}
+
+.modal-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 18px;
+}
+
+.modal-fields label,
+.modal-roles legend {
+  color: var(--green-950);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.modal-fields input,
+.role-add-row input {
+  width: 100%;
+  height: 42px;
+  margin-top: 7px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  color: var(--green-950);
+  background: #fcfdfb;
+  outline: 0;
+}
+
+.modal-fields input:focus,
+.role-add-row input:focus {
+  border-color: var(--green-700);
+  background: var(--white);
+  box-shadow: 0 0 0 3px rgba(52, 115, 77, 0.1);
+}
+
+.modal-password-wrap {
+  display: flex;
+  align-items: center;
+  margin-top: 7px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: #fcfdfb;
+}
+
+.modal-password-wrap:focus-within {
+  border-color: var(--green-700);
+  background: var(--white);
+  box-shadow: 0 0 0 3px rgba(52, 115, 77, 0.1);
+}
+
+.modal-password-wrap input {
+  margin-top: 0;
+  border: 0;
+  box-shadow: none;
+  background: transparent;
+}
+
+.modal-password-wrap input:focus {
+  box-shadow: none;
+}
+
+.modal-roles {
+  margin: 18px 0 0;
+  padding: 0;
+  border: 0;
+}
+
+.modal-roles legend {
+  padding: 0;
+}
+
+.modal-roles p {
+  margin: 6px 0 0;
+  color: var(--ink-muted);
+  font-size: 11px;
+  font-weight: 400;
+}
+
+.modal-role-list {
+  min-height: 42px;
+}
+
+.role-badge-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.role-badge-action:hover {
+  border-color: var(--orange-500);
+  background: #fff9f2;
+}
+
+.role-add-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.role-add-row input {
+  margin-top: 0;
+}
+
+.modal-active {
+  margin: 16px 0 0 !important;
+}
+
+.edit-profile-form .profile-notice {
+  margin: 14px 0 0;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.modal-save {
+  width: auto;
+  min-width: 168px;
+  height: 42px;
+}
+
+@media (max-width: 480px) {
+  .modal-overlay {
+    padding: 12px;
+    place-items: start center;
+  }
+
+  .modal-header,
+  .edit-profile-form {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  .modal-fields,
+  .role-add-row {
+    grid-template-columns: minmax(0, 1fr);
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .modal-actions {
+    flex-direction: column-reverse;
+  }
+
+  .modal-save,
+  .modal-actions .edit-profile-button {
+    width: 100%;
   }
 }
